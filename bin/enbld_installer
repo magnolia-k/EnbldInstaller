@@ -1,0 +1,35 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use 5.010001;
+
+use File::Spec;
+use File::Fetch;
+
+$File::Fetch::BLACKLIST = [ qw|lwp httptiny| ];
+
+my $ff       = File::Fetch->new( uri => 'http://xrl.us/cpanm' );
+my $location = File::Spec->catdir( $ENV{HOME}, '.enbld', 'etc' );
+my $where    = $ff->fetch( to => $location ) or die $ff->error;
+
+say "=====> Install Enbld to " . File::Spec->catdir( $ENV{HOME}, 'enbld') . ".";
+
+my $install_path = File::Spec->catdir( $ENV{HOME}, '.enbld', 'extlib' );
+system( '/usr/bin/perl', $where, 'Enbld', '-L', $install_path );
+
+print << 'EOF';
+=====> Finish installation.
+Please add following path to PATH.
+
+    $HOME/.enbld/extlib/bin
+    $HOME/.enbld/bin
+    $HOME/.enbld/sbin
+
+Please add following path to MANPATH.
+
+    $HOME/.enbld/share/man
+    $HOME/.enbld/man
+
+EOF
