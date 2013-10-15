@@ -14,13 +14,17 @@ my $ff       = File::Fetch->new( uri => 'http://xrl.us/cpanm' );
 my $location = File::Spec->catdir( $ENV{HOME}, '.enbld', 'etc' );
 my $where    = $ff->fetch( to => $location ) or die $ff->error;
 
-say "=====> Install Enbld to " . File::Spec->catdir( $ENV{HOME}, 'enbld') . ".";
+say "=====> Install Enbld to " . File::Spec->catdir( $ENV{HOME}, '.enbld' ) . ".";
 
 my $install_path = File::Spec->catdir( $ENV{HOME}, '.enbld', 'extlib' );
+
+print "\n";
 system( '/usr/bin/perl', $where, 'Enbld', '-L', $install_path );
+print "\n";
 
 print << 'EOF';
 =====> Finish installation.
+
 Please add following path to PATH.
 
     $HOME/.enbld/extlib/bin
