@@ -8,18 +8,19 @@ use 5.010001;
 use File::Spec;
 use File::Fetch;
 
-$File::Fetch::BLACKLIST = [ qw|lwp httptiny| ];
+$File::Fetch::BLACKLIST = [ qw/lwp/ ];
 
 my $ff       = File::Fetch->new( uri => 'http://xrl.us/cpanm' );
-my $location = File::Spec->catdir( $ENV{HOME}, '.enbld', 'etc' );
+my $home     = File::Spec->catdir( $ENV{HOME}, '.enbld' );
+my $location = File::Spec->catdir( $home, 'etc' );
 my $where    = $ff->fetch( to => $location ) or die $ff->error;
 
-say "=====> Install Enbld to " . File::Spec->catdir( $ENV{HOME}, '.enbld' ) . ".";
+say "=====> Install Enbld to " . $home . ".";
 
-my $install_path = File::Spec->catdir( $ENV{HOME}, '.enbld', 'extlib' );
+my $extlib = File::Spec->catdir( $home, 'extlib' );
 
 print "\n";
-system( '/usr/bin/perl', $where, 'Enbld', '-L', $install_path );
+system( '/usr/bin/perl', $where, 'Enbld', '-L', $extlib );
 print "\n";
 
 print << 'EOF';
