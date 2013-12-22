@@ -13,14 +13,19 @@ $File::Fetch::BLACKLIST = [ qw/lwp/ ];
 my $ff       = File::Fetch->new( uri => 'http://xrl.us/cpanm' );
 my $home     = File::Spec->catdir( $ENV{HOME}, '.enbld' );
 my $location = File::Spec->catdir( $home, 'etc' );
-my $where    = $ff->fetch( to => $location ) or die $ff->error;
+my $cpanm    = File::Spec->catfile( $location, 'cpnam' );
+my $where;
+
+unless ( -e $cpanm )  {
+    $where = $ff->fetch( to => $location ) or die $ff->error;
+}
 
 say "=====> Install Enbld to " . $home . ".";
 
 my $extlib = File::Spec->catdir( $home, 'extlib' );
 
 print "\n";
-system( '/usr/bin/perl', $where, 'Enbld', '-L', $extlib );
+system( '/usr/bin/perl', $cpanm, 'Enbld', '-L', $extlib );
 print "\n";
 
 print << 'EOF';
