@@ -13,7 +13,7 @@ $File::Fetch::BLACKLIST = [ qw/lwp/ ];
 my $ff       = File::Fetch->new( uri => 'http://xrl.us/cpanm' );
 my $home     = File::Spec->catdir( $ENV{HOME}, '.enbld' );
 my $location = File::Spec->catdir( $home, 'etc' );
-my $cpanm    = File::Spec->catfile( $location, 'cpnam' );
+my $cpanm    = File::Spec->catfile( $location, 'cpanm' );
 my $where;
 
 unless ( -e $cpanm )  {
