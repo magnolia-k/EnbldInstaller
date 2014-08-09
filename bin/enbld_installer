@@ -15,7 +15,8 @@ my $cpanm    = File::Spec->catfile( $home, 'etc', 'cpanm' );
 
 unless ( -e $cpanm )  {
     my $ff = File::Fetch->new( uri => 'http://xrl.us/cpanm' );
-    $ff->fetch( to => $cpanm ) or die $ff->error;
+    my $location = File::Spec->catdir( $home, 'etc' );
+    $ff->fetch( to => $location ) or die $ff->error;
 }
 
 say "=====> Install Enbld to " . $home . ".";
